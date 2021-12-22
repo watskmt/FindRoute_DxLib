@@ -18,41 +18,41 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+	_In_opt_ HINSTANCE hPrevInstance,
+	_In_ LPWSTR    lpCmdLine,
+	_In_ int       nCmdShow)
 {
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
+	UNREFERENCED_PARAMETER(hPrevInstance);
+	UNREFERENCED_PARAMETER(lpCmdLine);
 
-    // TODO: ここにコードを挿入してください。
+	// TODO: ここにコードを挿入してください。
 
-    // グローバル文字列を初期化する
-    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_FINDROUTE, szWindowClass, MAX_LOADSTRING);
-    MyRegisterClass(hInstance);
+	// グローバル文字列を初期化する
+	LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+	LoadStringW(hInstance, IDC_FINDROUTE, szWindowClass, MAX_LOADSTRING);
+	MyRegisterClass(hInstance);
 
-    // アプリケーション初期化の実行:
-    if (!InitInstance (hInstance, nCmdShow))
-    {
-        return FALSE;
-    }
+	// アプリケーション初期化の実行:
+	if (!InitInstance(hInstance, nCmdShow))
+	{
+		return FALSE;
+	}
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_FINDROUTE));
+	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_FINDROUTE));
 
-    MSG msg;
+	MSG msg;
 
-    // メイン メッセージ ループ:
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
+	// メイン メッセージ ループ:
+	while (GetMessage(&msg, nullptr, 0, 0))
+	{
+		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+	}
 
-    return (int) msg.wParam;
+	return (int)msg.wParam;
 }
 
 
@@ -64,23 +64,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 //
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
-    WNDCLASSEXW wcex;
+	WNDCLASSEXW wcex;
 
-    wcex.cbSize = sizeof(WNDCLASSEX);
+	wcex.cbSize = sizeof(WNDCLASSEX);
 
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc    = WndProc;
-    wcex.cbClsExtra     = 0;
-    wcex.cbWndExtra     = 0;
-    wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_FINDROUTE));
-    wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_FINDROUTE);
-    wcex.lpszClassName  = szWindowClass;
-    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+	wcex.style = CS_HREDRAW | CS_VREDRAW;
+	wcex.lpfnWndProc = WndProc;
+	wcex.cbClsExtra = 0;
+	wcex.cbWndExtra = 0;
+	wcex.hInstance = hInstance;
+	wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_FINDROUTE));
+	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_FINDROUTE);
+	wcex.lpszClassName = szWindowClass;
+	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
-    return RegisterClassExW(&wcex);
+	return RegisterClassExW(&wcex);
 }
 
 //
@@ -95,20 +95,20 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // グローバル変数にインスタンス ハンドルを格納する
+	hInst = hInstance; // グローバル変数にインスタンス ハンドルを格納する
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+	HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
-   if (!hWnd)
-   {
-      return FALSE;
-   }
+	if (!hWnd)
+	{
+		return FALSE;
+	}
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+	ShowWindow(hWnd, nCmdShow);
+	UpdateWindow(hWnd);
 
-   return TRUE;
+	return TRUE;
 }
 
 //
@@ -123,60 +123,60 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    switch (message)
-    {
-    case WM_COMMAND:
-        {
-            int wmId = LOWORD(wParam);
-            // 選択されたメニューの解析:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
-        }
-        break;
-    case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: HDC を使用する描画コードをここに追加してください...
-            EndPaint(hWnd, &ps);
-        }
-        break;
-    case WM_DESTROY:
-        PostQuitMessage(0);
-        break;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
-    }
-    return 0;
+	switch (message)
+	{
+	case WM_COMMAND:
+	{
+		int wmId = LOWORD(wParam);
+		// 選択されたメニューの解析:
+		switch (wmId)
+		{
+		case IDM_ABOUT:
+			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+			break;
+		case IDM_EXIT:
+			DestroyWindow(hWnd);
+			break;
+		default:
+			return DefWindowProc(hWnd, message, wParam, lParam);
+		}
+	}
+	break;
+	case WM_PAINT:
+	{
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(hWnd, &ps);
+		// TODO: HDC を使用する描画コードをここに追加してください...
+		EndPaint(hWnd, &ps);
+	}
+	break;
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	default:
+		return DefWindowProc(hWnd, message, wParam, lParam);
+	}
+	return 0;
 }
 
 // バージョン情報ボックスのメッセージ ハンドラーです。
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    UNREFERENCED_PARAMETER(lParam);
-    switch (message)
-    {
-    case WM_INITDIALOG:
-        return (INT_PTR)TRUE;
+	UNREFERENCED_PARAMETER(lParam);
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		return (INT_PTR)TRUE;
 
-    case WM_COMMAND:
-        if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-        {
-            EndDialog(hDlg, LOWORD(wParam));
-            return (INT_PTR)TRUE;
-        }
-        break;
-    }
-    return (INT_PTR)FALSE;
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		break;
+	}
+	return (INT_PTR)FALSE;
 }
 #include "DxLib.h"
 #include <math.h>
@@ -186,8 +186,8 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 1024
-#define SIZEX 50
-#define SIZEY 50
+#define SIZEX 256
+#define SIZEY 256
 
 typedef struct Point
 {
@@ -217,7 +217,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int i;
 	char key = 0;
 	int state[SIZEY][SIZEX];
-	
+
 	Point route[SIZEX*SIZEY];
 	int steps = 0;
 
@@ -229,49 +229,103 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	srand(time(NULL));
 	for (int y = 0; y < SIZEY; y++)
 		for (int x = 0; x < SIZEX; x++)
-			state[y][x] = (rand() % 10 > 6 ) ? 1 : 0;
+			state[y][x] = (rand() % 10 > 6) ? 1 : 0;
+	state[0][0] = 0;
+	state[0][1] = 0;
+	state[1][0] = 0;
+	state[1][1] = 0;
+	state[SIZEY - 1][SIZEX - 1] = 0;
+	state[SIZEY - 1][SIZEX - 2] = 0;
+	state[SIZEY - 2][SIZEX - 1] = 0;
+	state[SIZEY - 2][SIZEX - 2] = 0;
 
-	
 	ShowStatus(state, current);
+	// 通ってきた道をマーク（-1）
+	state[current.y][current.x] = -1;
 
 	while (1)
 	{
 		clsDx();
-		// 通ってきた道をマーク（-1）
-		state[current.y][current.x] = -1;
 
-		// 右から初めて右回りに探索
-		if (current.x != SIZEX-1 && state[current.y][current.x + 1] == 0)
+		if (current.x > current.y)
 		{
-			current.x++;
-			route[steps++] = current;
-		}
-		else if (current.y != SIZEY-1 && state[current.y + 1][current.x] == 0)
-		{
-			current.y++;
-			route[steps++] = current;
-		}
-		else if (current.x != 0 && state[current.y][current.x - 1] == 0)
-		{
-			current.x--;
-			route[steps++] = current;
-		}
-		else if (current.y != 0 && state[current.y - 1][current.x] == 0)
-		{
-			current.y--;
-			route[steps++] = current;
+			if (current.y != SIZEY - 1 && state[current.y + 1][current.x] == 0)
+			{
+				current.y++;
+				route[steps++] = current;
+				state[current.y][current.x] = -1;
+			}
+			else if (current.x != 0 && state[current.y][current.x - 1] == 0)
+			{
+				current.x--;
+				route[steps++] = current;
+				state[current.y][current.x] = -1;
+			}
+			else if (current.x != SIZEX - 1 && state[current.y][current.x + 1] == 0)
+			{
+				current.x++;
+				route[steps++] = current;
+				state[current.y][current.x] = -1;
+			}
+			else if (current.y != 0 && state[current.y - 1][current.x] == 0)
+			{
+				current.y--;
+				route[steps++] = current;
+				state[current.y][current.x] = -1;
+			}
+			else
+			{
+				if (steps > 0)
+				{
+					state[current.y][current.x] = -2;
+					current = route[steps-2];
+					steps--;
+				}
+				else
+					break;
+			}
 		}
 		else
 		{
-			if (steps > 0)
-				current = route[--steps];
+			if (current.x != SIZEX - 1 && state[current.y][current.x + 1] == 0)
+			{
+				current.x++;
+				route[steps++] = current;
+				state[current.y][current.x] = -1;
+			}
+			else if (current.y != 0 && state[current.y - 1][current.x] == 0)
+			{
+				current.y--;
+				route[steps++] = current;
+				state[current.y][current.x] = -1;
+			}
+			else if (current.y != SIZEY - 1 && state[current.y + 1][current.x] == 0)
+			{
+				current.y++;
+				route[steps++] = current;
+				state[current.y][current.x] = -1;
+			}
+			else if (current.x != 0 && state[current.y][current.x - 1] == 0)
+			{
+				current.x--;
+				route[steps++] = current;
+				state[current.y][current.x] = -1;
+			}
 			else
-				break;
+			{
+				if (steps > 0)
+				{
+					state[current.y][current.x] = -2;
+					current = route[steps - 2];
+					steps--;
+				}
+				else
+					break;
+			}
 		}
 
-
 		ShowStatus(state, current);
-		if (current.x == SIZEX-1 && current.y == SIZEY-1)
+		if (current.x == SIZEX - 1 && current.y == SIZEY - 1)
 		{
 			printf("Goal\n");
 			break;
@@ -281,7 +335,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			printf("Failed\n");
 			break;
 		}
-		Sleep(50);
+		// Sleep(3);
 		// 画面表示待ち（OSに処理を返す）
 		if (ProcessMessage() == -1)
 		{
@@ -306,21 +360,22 @@ int ShowStatus(int state[SIZEY][SIZEX], Point p)
 
 	int colWall = GetColor(255, 255, 255);
 	int colMe = GetColor(255, 100, 100);
-	int colProhibit = GetColor(50, 50, 50);
-	
+	int colFailed = GetColor(50, 50, 50);
+	int colProhibit = GetColor(150, 50, 50);
+
 	for (i = 0; i < SIZEY; i++)
 	{
 		for (j = 0; j < SIZEX; j++)
 		{
 			if (j == p.x && i == p.y)
-				DrawCircle(boxSizeX * j+ boxSizeX/2, boxSizeY * i + boxSizeY/2, (boxSizeY > boxSizeX ? boxSizeX : boxSizeY)/2, colMe, 1);
+				DrawCircle(boxSizeX * j + boxSizeX / 2, boxSizeY * i + boxSizeY / 2, (boxSizeY > boxSizeX ? boxSizeX : boxSizeY) / 2, colMe, 1);
 			else
 			{
 				int col;
 				switch (state[i][j])
 				{
 				case 0:
-					col =0;
+					col = 0;
 					break;
 				case -1:
 					col = colProhibit;
@@ -328,8 +383,11 @@ int ShowStatus(int state[SIZEY][SIZEX], Point p)
 				case 1:
 					col = colWall;
 					break;
+				case -2:
+					col = colFailed;
+					break;
 				default:
-					col=0;
+					col = 0;
 					break;
 				}
 				DrawBox(boxSizeX * j, boxSizeY * i, boxSizeX * (j + 1) - 1, boxSizeY * (i + 1) - 1, col, 1);
